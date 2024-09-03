@@ -19,10 +19,11 @@ def print_animals_data(animals_data):
         diet = animal.get('characteristics', None).get('diet')
         location = animal.get('locations', None)[0]
         type = animal.get('characteristics', None).get('type')
+        color = animal.get('characteristics', None).get('color')
 
         output += '<li class="cards__item">'    
 
-        fields = [('Name', name), ('Diet', diet), ('Location', location), ('Type', type)]
+        fields = [('Name', name), ('Diet', diet), ('Location', location), ('Type', type), ('Color', color)]
         for field in fields:
             if field[1] is None:
                 continue
