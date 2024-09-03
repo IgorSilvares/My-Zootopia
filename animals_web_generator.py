@@ -4,29 +4,18 @@ def load_data(file_path):
     """ Loads a JSON file """
     with open(file_path, 'r') as handle:
         return json.load(handle)
-    
+
+
 animals_data = load_data('animals_data.json')
 
-'''
-Name: American Foxhound
-Diet: Omnivore
-Location: North-America
-Type: Hound
-
-
-The English Foxhound doesn’t have a type field, and therefore we will not print this field:
-...
-
-Name: English Foxhound
-Diet: Omnivore
-Location: Europe
-'''
 
 def print_animals_data(animals_data):
     """
     Print animals data from the JSON file
     if the field is not present in the animal data, this field will not be printed
     """
+
+    output = ''
 
     for animal in animals_data:
         name = animal.get('name')
@@ -39,7 +28,25 @@ def print_animals_data(animals_data):
             if field[1] is None:
                 continue
 
-            print(f'{field[0]}: {field[1]}')
-        print()
+            output += (f'{field[0]}: {field[1]} ')
 
-print_animals_data(animals_data)
+        output += '\n'
+
+    return output
+
+
+def read_html_template(file_path):
+    """ Reads HTML template file """
+    with open(file_path, 'r') as handle:
+        return handle.read()
+
+
+file_path = 'animals_template.html'
+
+template = read_html_template(file_path)
+output = print_animals_data(animals_data)
+
+template = template.replace('__REPLACE_ANIMALS_INFO__', output)
+
+with open('animals.html', 'w') as handle:
+    handle.write(template)
