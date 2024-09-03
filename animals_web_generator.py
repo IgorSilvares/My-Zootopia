@@ -6,16 +6,13 @@ def load_data(file_path):
         return json.load(handle)
 
 
-animals_data = load_data('animals_data.json')
-
-
 def print_animals_data(animals_data):
     """
     Print animals data from the JSON file
     if the field is not present in the animal data, this field will not be printed
     """
 
-    output = ''
+    output = '<ul class="cards">'
 
     for animal in animals_data:
         name = animal.get('name')
@@ -23,15 +20,17 @@ def print_animals_data(animals_data):
         location = animal.get('locations', None)[0]
         type = animal.get('characteristics', None).get('type')
 
+        output += '<li class="cards__item">'    
+
         fields = [('Name', name), ('Diet', diet), ('Location', location), ('Type', type)]
         for field in fields:
             if field[1] is None:
                 continue
 
-            output += (f'{field[0]}: {field[1]} ')
+            output += (f'{field[0]}: {field[1]}<br/>')
 
-        output += '\n'
-
+        output += '</li>'
+    output += '</ul>'
     return output
 
 
@@ -41,12 +40,11 @@ def read_html_template(file_path):
         return handle.read()
 
 
+animals_data = load_data('animals_data.json')
 file_path = 'animals_template.html'
-
 template = read_html_template(file_path)
 output = print_animals_data(animals_data)
-
-template = template.replace('__REPLACE_ANIMALS_INFO__', output)
+final_template = template.replace('__REPLACE_ANIMALS_INFO__', output)
 
 with open('animals.html', 'w') as handle:
-    handle.write(template)
+    handle.write(final_template)
