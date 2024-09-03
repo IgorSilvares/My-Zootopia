@@ -26,10 +26,12 @@ def print_animals_data(animals_data):
         for field in fields:
             if field[1] is None:
                 continue
+            if field[0] == 'Name':
+                output += (f'<div class="card__title">{field[1]}</div><p class="card__text">')
 
-            output += (f'{field[0]}: {field[1]}<br/>')
+            output += (f'<strong>{field[0]}:</strong> {field[1]}<br/>')
 
-        output += '</li>'
+        output += '</p></li>'
     output += '</ul>'
     return output
 
